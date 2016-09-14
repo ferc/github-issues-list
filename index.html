@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Angular Github Issues</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./styles/issues.css" />
+  </head>
+  <body ng-app="githubAPI" ng-controller="IssuesController">
+    <div class="container">
+      <h1>Angular Github Issues</h1>
+
+      <div class="form-group">
+        <label for="searchText">Search</label>
+        <input id="searchText" class="form-control" type="text" ng-model="searchText" placeholder="Title">
+      </div>
+
+      <table class="table table-responsive table-striped">
+        <tr>
+          <th>Title</th>
+          <th>Body</th>
+          <th>User login</th>
+          <th>Assignee login</th>
+        </tr>
+        <tr ng-repeat="issue in issues | filter:{ title: searchText }">
+          <td>{{ issue.title || '-' }}</td>
+          <td>{{ issue.body || '-' }}</td>
+          <td>{{ issue.user.login || '-' }}</td>
+          <td>{{ issue.assignee.login || '-' }}</td>
+        </tr>
+      </table>
+
+      <button class="btn btn-primary btn-block" ng-if="!completed" type="button" ng-click="loadMore()" ng-disabled="loading">Load more</button>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="./src/issues-controller.js"></script>
+    <script src="./src/issues-service.js"></script>
+  </body>
+</html>
